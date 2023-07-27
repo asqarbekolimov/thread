@@ -3,10 +3,15 @@ import { HiOutlineDocumentText } from "react-icons/hi2";
 import { FiAtSign } from "react-icons/fi";
 import { BiHide } from "react-icons/bi";
 import { RxEyeOpen } from "react-icons/rx";
+import { FaRegFileImage } from "react-icons/fa";
 
 const Auth = () => {
   const [auth, setAuth] = useState("signin");
   const [email, setEmail] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileChange = (event) => {
+    setSelectedFile(URL.createObjectURL(event.target.files[0]));
+  };
   const toggleAuth = (state) => {
     setAuth(state);
   };
@@ -21,6 +26,19 @@ const Auth = () => {
           </div>
 
           <form action="" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+            {auth === "signin" ? null : (
+              <div class="upload">
+                <img
+                  src={selectedFile}
+                  className="w-[150px] h-[100px] rounded-full"
+                  alt=""
+                />
+                <div class="round flex items-center justify-center">
+                  <input type="file" onChange={handleFileChange} />
+                  <FaRegFileImage />
+                </div>
+              </div>
+            )}
             {auth === "signin" ? (
               ""
             ) : (

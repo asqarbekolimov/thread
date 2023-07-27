@@ -3,7 +3,6 @@ import { BsImageFill } from "react-icons/bs";
 
 const CreatPost = ({ setModal }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  console.log(selectedFile);
   const handleFileChange = (event) => {
     setSelectedFile(URL.createObjectURL(event.target.files[0]));
   };
