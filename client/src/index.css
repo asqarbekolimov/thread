@@ -7,3 +7,29 @@
     @apply dark:bg-[#101010] dark:text-white bg-white transition duration-200 ease-in;
   }
 }
+.btn-warning {
+  position: relative;
+  padding: 11px 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-radius: 3px;
+  color: #fff;
+  background-color: rgb(28 100 242 / var(--tw-bg-opacity));
+  border: 0;
+  transition: 0.2s;
+  overflow: hidden;
+  opacity: 0.9;
+}
+
+.btn-warning input[type="file"] {
+  cursor: pointer;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  transform: scale(3);
+  opacity: 0;
+}
+
+.btn-warning:hover {
+  opacity: 1;
+}
