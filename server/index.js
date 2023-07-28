@@ -6,6 +6,16 @@ const { MONGO_URL } = require("./keys");
 
 require("./models/user");
 require("./models/Post");
+
+const cors = require("cors");
+const corsOption = {
+  origin: "*",
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOption));
+
 mongoose.connect(MONGO_URL);
 
 app.use(express.json());

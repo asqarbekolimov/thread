@@ -19,9 +19,7 @@ router.post("/signup", (req, res) => {
 
   User.findOne({ email: email }).then((savedUser) => {
     if (savedUser) {
-      return res
-        .status(422)
-        .json({ error: "user already exists with that email" });
+      return res.status(422).json({ error: "User already exists" });
     } else {
       bcrypt.hash(password, 10).then((hashedPass) => {
         const user = new User({
@@ -32,7 +30,7 @@ router.post("/signup", (req, res) => {
         user
           .save()
           .then((user) => {
-            res.json({ msg: "added successfully" });
+            res.json({ msg: "Register successfully" });
           })
           .catch((err) => {
             console.log(err);
