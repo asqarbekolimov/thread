@@ -7,7 +7,6 @@ const Dashboard = () => {
   const handleModal = (item) => {
     setModal(item);
   };
-  console.log(modal);
   return (
     <div className="container max-w-[620px] m-auto relative">
       <div className="my-5">

@@ -68,6 +68,9 @@ const Auth = () => {
         } else {
           toast.success("Success");
           navigate("/dashboard");
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          console.log(data);
         }
       });
   };

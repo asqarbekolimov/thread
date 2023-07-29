@@ -53,9 +53,10 @@ router.post("/signin", (req, res) => {
       .compare(password, savedUser.password)
       .then((doMatch) => {
         if (doMatch) {
+          const { _id, name, email } = savedUser;
           // res.json({ msg: "successfuly signed in" });
           const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
-          res.json({ token: token });
+          res.json({ token: token, user: { _id, name, email } });
         } else {
           return res.status(422).json({ error: "Invalid password" });
         }
