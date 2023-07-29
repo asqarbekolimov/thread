@@ -39,9 +39,34 @@ const Auth = () => {
       .then((data) => {
         if (data.error) {
           toast.error(`${data.error}`);
-          // redirect("/");
         } else {
           toast.success(data.msg);
+          navigate(0);
+        }
+      });
+  };
+
+  const logData = async () => {
+    if (!reg.test(email)) {
+      toast("Email not match");
+      return;
+    }
+    await fetch("http://localhost:5000/signin", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(`${data.error}`);
+        } else {
+          toast.success("Success");
           navigate("/dashboard");
         }
       });
@@ -169,7 +194,8 @@ const Auth = () => {
 
               {auth === "signin" ? (
                 <button
-                  type="submit"
+                  onClick={() => logData()}
+                  type="button"
                   className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
                 >
                   Sign In
