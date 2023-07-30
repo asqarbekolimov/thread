@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { VscAccount } from "react-icons/vsc";
-import { AiOutlineGlobal } from "react-icons/ai";
+import { AiOutlineGlobal, AiOutlineUserAdd } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { userReducer } from "../../reducer/userReducer";
+import { UserContext } from "../../App";
 
 const Navbar = () => {
+  const { state, dispatch } = useContext(UserContext);
+
   const [theme, setTheme] = useState("dark");
   useEffect(() => {
     if (theme === "dark") {
@@ -20,7 +24,7 @@ const Navbar = () => {
   return (
     <div className="max-w-[620px] container flex items-center justify-between py-5">
       <div>
-        <Link to={"/"}>
+        <Link to={state ? "/" : "/auth"}>
           <AiOutlineGlobal className="text-2xl cursor-pointer" />
         </Link>
       </div>
@@ -32,9 +36,16 @@ const Navbar = () => {
         )}
       </div>
       <div className="w-10">
-        <Link to={"/dashboard"}>
-          <VscAccount className="text-2xl cursor-pointer" />
-        </Link>
+        {state ? (
+          <Link to={"/dashboard"}>
+            {" "}
+            <VscAccount className="text-2xl cursor-pointer" />
+          </Link>
+        ) : (
+          <Link to={"/auth"}>
+            <AiOutlineUserAdd className="text-2xl cursor-pointer" />
+          </Link>
+        )}
       </div>
     </div>
   );
