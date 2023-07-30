@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CreatPost, Thread } from "../components";
 import { MdOutlineCreate } from "react-icons/md";
 import { AiOutlineUserDelete } from "react-icons/ai";
@@ -8,10 +8,25 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
+
   const [modal, setModal] = useState(false);
+  const [profile, setProfile] = useState([]);
   const handleModal = (item) => {
     setModal(item);
   };
+
+  useEffect(() => {
+    fetch("http://localhost:5000/mypost", {
+      headers: {
+        Authorization: "Sammi " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setProfile(result.myPost);
+      });
+  }, []);
+  console.log(profile);
   return (
     <div className="container max-w-[620px] m-auto relative">
       <div className="my-5">
@@ -55,8 +70,9 @@ const Dashboard = () => {
       {modal ? (
         <CreatPost handleModal={handleModal} setModal={setModal} />
       ) : null}
-      <Thread />
-      <Thread />
+      {profile.map((data) => (
+        <Thread key={data._id} post={data} />
+      ))}
     </div>
   );
 };
