@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import { FiAtSign } from "react-icons/fi";
 import { BiHide } from "react-icons/bi";
@@ -7,8 +7,10 @@ import { FaRegFileImage } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Auth = () => {
+  const { state, dispatch } = useContext(UserContext);
   const [auth, setAuth] = useState("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -70,7 +72,7 @@ const Auth = () => {
           navigate("/dashboard");
           localStorage.setItem("jwt", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          console.log(data);
+          dispatch({ type: "USER", payload: data.user });
         }
       });
   };
