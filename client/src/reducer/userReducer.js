@@ -6,4 +6,7 @@ export const userReducer = (state, action) => {
   } else {
     return state;
   }
+  if (action.type === "CLEAR") {
+    return null;
+  }
 };

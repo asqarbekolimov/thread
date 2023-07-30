@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { VscAccount } from "react-icons/vsc";
-import { AiOutlineGlobal, AiOutlineUserAdd } from "react-icons/ai";
+import {
+  AiOutlineGlobal,
+  AiOutlineUserAdd,
+  AiOutlineUserDelete,
+} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { userReducer } from "../../reducer/userReducer";
 import { UserContext } from "../../App";
