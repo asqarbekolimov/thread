@@ -14,10 +14,9 @@ const Routing = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
     if (user) {
       dispatch({ type: "USER", payload: user });
-      navigate("/dashboard");
+      navigate("/");
     } else {
       navigate("/auth");
     }
