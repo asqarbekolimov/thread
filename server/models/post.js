@@ -14,6 +14,12 @@ const postSchema = new Schema({
     type: String,
     required: false,
   },
+  likes: [
+    {
+      type: ObjectId,
+      ref: "User",
+    },
+  ],
   postedBy: {
     type: ObjectId,
     ref: "User",
