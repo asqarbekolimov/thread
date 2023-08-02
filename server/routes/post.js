@@ -6,6 +6,7 @@ const Post = mongoose.model("Post");
 
 router.get("/allpost", login, (req, res) => {
   Post.find()
+    .populate("comments.postedBy", "_id, name")
     .populate("postedBy", "_id, name")
     .then((posts) => {
       res.json({ posts });
@@ -94,15 +95,39 @@ router.get("/posts/:postId", (req, res) => {
 
   // MongoDB dan postni olish va uni sahifaga jo'natish
   Post.findById(postId)
+    .populate("comments.postedBy", "_id, name")
+    .populate("postedBy", "_id, name")
     .then((post) => {
       if (!post) {
         return res.status(404).json({ message: "Post topilmadi" });
       }
       res.json(post);
     })
+
     .catch((err) => {
       console.error(err);
       res.status(500).json({ message: "Serverda xatolik yuz berdi" });
+    });
+});
+
+router.put("/comments", login, (req, res) => {
+  const comment = {
+    text: req.body.text,
+    postedBy: req.user._id,
+  };
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $push: { comments: comment },
+    },
+    { new: true }
+  )
+    .populate("comments.postedBy", "_id, name")
+    .populate("postedBy", "_id, name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else res.json(result);
     });
 });
 

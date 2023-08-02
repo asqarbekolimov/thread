@@ -19,7 +19,6 @@ const Home = () => {
         console.log(err);
       });
   }, []);
-
   if (!data.length) {
     return (
       <div className="container max-w-[620px] h-screen flex items-center justify-center m-auto">
@@ -36,7 +35,13 @@ const Home = () => {
   return (
     <div className="container max-w-[620px] m-auto">
       {data?.map((post) => (
-        <Thread key={post._id} post={post} data={data} setData={setData} />
+        <Thread
+          key={post._id}
+          post={post}
+          data={data}
+          setData={setData}
+          comments={post.comments.postedBy}
+        />
       ))}
     </div>
   );
