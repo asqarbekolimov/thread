@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import { userReducer, initialState } from "./reducer/userReducer";
+import PostDetail from "./pages/post-detail";
 
 export const UserContext = createContext();
 
@@ -16,7 +17,7 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       dispatch({ type: "USER", payload: user });
-      navigate("/");
+      // navigate("/");
     } else {
       navigate("/auth");
     }
@@ -26,6 +27,7 @@ const Routing = () => {
       <Route path="/" element={<Home />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/posts/:id" element={<PostDetail />} />
     </Routes>
   );
 };

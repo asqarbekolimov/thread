@@ -3,8 +3,10 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { LuRepeat2, LuSend } from "react-icons/lu";
 import { UserContext } from "../../App";
+import { Link } from "react-router-dom";
+import Comment from "../comment/comment";
 
-const Thread = ({ post, data, setData }) => {
+const Thread = ({ post, data, setData, options = true }) => {
   const { state, dispatch } = useContext(UserContext);
 
   const likePost = (id) => {
@@ -67,13 +69,13 @@ const Thread = ({ post, data, setData }) => {
       </div>
       <div>
         <div className="hover:underline cursor-pointer font-semibold mb-2">
-          {post?.postedBy.name}
+          {post?.postedBy?.name}
         </div>
         <p className="text-base text-justify mb-3">{post?.body}</p>
         <img className="w-[550px] rounded-xl mb-5" src={post?.photo} alt="" />
-        <div className="flex items-center gap-5">
+        <div className={`${options ? "flex items-center gap-5" : "hidden"} `}>
           <div className="flex items-center gap-1">
-            {post.likes.includes(state._id) ? (
+            {post.likes?.includes(state._id) ? (
               <AiFillHeart
                 onClick={() => unLikePost(post._id)}
                 className="text-2xl cursor-pointer text-red-600"
@@ -88,7 +90,9 @@ const Thread = ({ post, data, setData }) => {
             <span className="text-sm text-gray-400">{post.likes?.length}</span>
           </div>
           <div className="flex items-center gap-1">
-            <FaRegComment className="text-xl cursor-pointer" />
+            <Link to={`/posts/${post._id}`}>
+              <FaRegComment className="text-xl cursor-pointer" />
+            </Link>
             <span className="text-sm text-gray-400">110</span>
           </div>
           <div className="flex items-center gap-1">
@@ -100,6 +104,7 @@ const Thread = ({ post, data, setData }) => {
             <span className="text-sm text-gray-400">110</span>
           </div>
         </div>
+        {!options ? <Comment /> : null}
       </div>
     </div>
   );

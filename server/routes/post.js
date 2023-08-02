@@ -89,4 +89,21 @@ router.put("/unlike", login, (req, res) => {
   });
 });
 
+router.get("/posts/:postId", (req, res) => {
+  const postId = req.params.postId;
+
+  // MongoDB dan postni olish va uni sahifaga jo'natish
+  Post.findById(postId)
+    .then((post) => {
+      if (!post) {
+        return res.status(404).json({ message: "Post topilmadi" });
+      }
+      res.json(post);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Serverda xatolik yuz berdi" });
+    });
+});
+
 module.exports = router;
