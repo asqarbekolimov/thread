@@ -18,7 +18,7 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [data]);
   if (!data.length) {
     return (
       <div className="container max-w-[620px] h-screen flex items-center justify-center m-auto">
