@@ -32,7 +32,7 @@ const Dashboard = () => {
       <div className="my-5">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-xl font-bold"> Asqarbek Olimov</h1>
+            <h1 className="text-xl font-bold">{state?.name}</h1>
             <div>mr_asqarbek</div>
           </div>
           <img className="rounded-full w-20" src="/user.jpg" alt="" />

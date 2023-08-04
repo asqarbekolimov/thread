@@ -108,7 +108,15 @@ const Thread = ({ post, data, setData, options = true }) => {
       </div>
       <div>
         <div className="hover:underline cursor-pointer font-semibold mb-2">
-          {post?.postedBy?.name}
+          <Link
+            to={
+              post?.postedBy?._id !== state._id
+                ? `/user/${post?.postedBy?._id}`
+                : "/dashboard"
+            }
+          >
+            {post?.postedBy?.name}
+          </Link>
         </div>
         <p className="text-base text-justify mb-3">{post?.body}</p>
         <img className="w-[550px] rounded-xl mb-5" src={post?.photo} alt="" />

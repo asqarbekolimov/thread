@@ -21,6 +21,7 @@ mongoose.connect(MONGO_URL);
 app.use(express.json());
 app.use(require("./routes/auth"));
 app.use(require("./routes/post"));
+app.use(require("./routes/user"));
 
 app.listen(PORT, () => {
   console.log(`Server has been started on port ${PORT}`);
