@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsImageFill } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
 
 const CreatPost = ({ setModal }) => {
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
   const [url, setUrl] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const { state, dispatch } = useContext(UserContext);
+  console.log(state);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const CreatPost = ({ setModal }) => {
           <div className="mr-1">
             <img
               className="w-10 rounded-full"
-              src="/user.jpg"
+              src={state?.photo}
               alt="Profile Picture"
             />
           </div>

@@ -26,26 +26,22 @@ const Dashboard = () => {
         setProfile(result.myPost);
       });
   }, []);
-  console.log(profile);
   return (
     <div className="container max-w-[620px] m-auto relative">
       <div className="my-5">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-xl font-bold">{state?.name}</h1>
-            <div>mr_asqarbek</div>
+            <div>@{state?.username}</div>
           </div>
-          <img className="rounded-full w-20" src="/user.jpg" alt="" />
+          <img className="rounded-full w-20" src={state?.photo} alt="" />
         </div>
         <div className="my-5">
-          <p className="text-base font-normal">
-            🚀 Follow my journey and discover the essential tools and strategies
-            to make it happen.
-          </p>
+          <p className="text-base font-normal">{state?.bio}</p>
         </div>
         <div>
           <span className="text-base text-gray-500 font-normal cursor-pointer hover:underline">
-            43 followers
+            {profile?.length} threads
           </span>
         </div>
         <div className="flex justify-between">

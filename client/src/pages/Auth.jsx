@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import { FiAtSign } from "react-icons/fi";
 import { BiHide } from "react-icons/bi";
@@ -13,20 +13,44 @@ const Auth = () => {
   const { state, dispatch } = useContext(UserContext);
   const [auth, setAuth] = useState("signin");
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState(
+    "http://res.cloudinary.com/dhv4bjkxh/image/upload/v1691394200/dpgfiotglhv2buf3qo3e.png"
+  );
 
   const navigate = useNavigate();
   const reg =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const postData = async () => {
+  const uploadPic = () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "mern-project");
+    data.append("cloud_name", "dhv4bjkxh");
+    fetch("https://api.cloudinary.com/v1_1/dhv4bjkxh/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUrl(data.url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const ourFields = () => {
     if (!reg.test(email)) {
       toast("Email not match");
       return;
     }
-    await fetch("http://localhost:5000/signup", {
+    fetch("http://localhost:5000/signup", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -35,6 +59,9 @@ const Auth = () => {
         name: name,
         email: email,
         password: password,
+        photo: url,
+        bio: bio,
+        username: username,
       }),
     })
       .then((res) => res.json())
@@ -47,6 +74,20 @@ const Auth = () => {
         }
       });
   };
+
+  const postData = () => {
+    if (image) {
+      uploadPic();
+    } else {
+      ourFields();
+    }
+  };
+
+  useEffect(() => {
+    if (url) {
+      ourFields();
+    }
+  }, [url]);
 
   const logData = async () => {
     if (!reg.test(email)) {
@@ -79,6 +120,7 @@ const Auth = () => {
 
   const handleFileChange = (event) => {
     setSelectedFile(URL.createObjectURL(event.target.files[0]));
+    setImage(event.target.files[0]);
   };
   const toggleAuth = (state) => {
     setAuth(state);
@@ -99,17 +141,19 @@ const Auth = () => {
 
           <div className="mx-auto mb-0 mt-8 max-w-md space-y-4">
             {auth === "signin" ? null : (
-              <div className="upload">
-                <img
-                  src={selectedFile}
-                  className="w-[150px] h-[100px] rounded-full"
-                  alt=""
-                />
-                <div className="round flex items-center justify-center">
-                  <input type="file" onChange={handleFileChange} />
-                  <FaRegFileImage />
+              <>
+                <div className="upload">
+                  <img
+                    src={selectedFile}
+                    className="w-[150px] h-[100px] rounded-full"
+                    alt=""
+                  />
+                  <div className="round flex items-center justify-center">
+                    <input type="file" onChange={handleFileChange} />
+                    <FaRegFileImage />
+                  </div>
                 </div>
-              </div>
+              </>
             )}
             {auth === "signin" ? (
               ""
@@ -134,6 +178,39 @@ const Auth = () => {
                 </div>
               </div>
             )}
+            {auth === "signup" ? (
+              <>
+                <div className="mt-3">
+                  <label htmlFor="email" className="sr-only">
+                    Email
+                  </label>
+
+                  <div className="relative">
+                    <input
+                      type="email"
+                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500   dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+
+                    <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
+                      <FiAtSign className="dark:text-slate-600" />
+                    </span>
+                  </div>
+                </div>
+                <div className="relative">
+                  <textarea
+                    id="message"
+                    rows=""
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Bio"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                  ></textarea>
+                </div>
+              </>
+            ) : null}
             <div>
               <label htmlFor="email" className="sr-only">
                 Email

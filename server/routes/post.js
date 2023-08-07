@@ -7,7 +7,7 @@ const Post = mongoose.model("Post");
 router.get("/allpost", login, (req, res) => {
   Post.find()
     .populate("comments.postedBy", "_id, name")
-    .populate("postedBy", "_id, name")
+    .populate("postedBy", "_id name photo")
     .then((posts) => {
       res.json({ posts });
     })
@@ -41,7 +41,7 @@ router.post("/createpost", login, (req, res) => {
 
 router.get("/mypost", login, (req, res) => {
   Post.find({ postedBy: req.user._id })
-    .populate("postedBy", "_id, name")
+    .populate("postedBy", "_id, name photo")
     .then((myPost) => {
       res.json({ myPost });
     })
@@ -96,7 +96,7 @@ router.get("/posts/:postId", (req, res) => {
   // MongoDB dan postni olish va uni sahifaga jo'natish
   Post.findById(postId)
     .populate("comments.postedBy", "_id, name")
-    .populate("postedBy", "_id, name")
+    .populate("postedBy", "_id name photo")
     .then((post) => {
       if (!post) {
         return res.status(404).json({ message: "Post topilmadi" });
@@ -123,7 +123,7 @@ router.put("/comments", login, (req, res) => {
     { new: true }
   )
     .populate("comments.postedBy", "_id, name")
-    .populate("postedBy", "_id, name")
+    .populate("postedBy", "_id name photo bio username")
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });

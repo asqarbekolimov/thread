@@ -10,6 +10,7 @@ const PostDetail = () => {
       .then((res) => res.json())
       .then((data) => setPost(data));
   }, [post]);
+  console.log(post);
   return (
     <div className="container max-w-[620px] flex items-center m-auto">
       <Thread post={post} options={false} />

@@ -99,18 +99,21 @@ const Thread = ({ post, data, setData, options = true }) => {
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div className="flex gap-4 border-y border-solid dark:border-gray-100/20 py-6">
       <ToastContainer />
       <div className="w-14">
-        <img className="rounded-full w-14" src="/user.jpg" alt="" />
+        <img
+          className="rounded-full w-14"
+          src={post?.postedBy?.photo}
+          alt="No "
+        />
       </div>
       <div>
         <div className="hover:underline cursor-pointer font-semibold mb-2">
           <Link
             to={
-              post?.postedBy?._id !== state._id
+              post?.postedBy?._id !== state?._id
                 ? `/user/${post?.postedBy?._id}`
                 : "/dashboard"
             }
@@ -179,14 +182,16 @@ const Thread = ({ post, data, setData, options = true }) => {
               >
                 <footer className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
-                    <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                      <img
-                        className="mr-2 w-6 h-6 rounded-full"
-                        src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                        alt="Michael Gough"
-                      />
-                      {item.postedBy.name}
-                    </p>
+                    <Link to={`/user/${item?.postedBy?._id}`}>
+                      <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                        <img
+                          className="mr-2 w-6 h-6 rounded-full"
+                          src={post?.postedBy?.photo}
+                          alt={item.postedBy.name}
+                        />
+                        {item.postedBy.name}
+                      </p>
+                    </Link>
                   </div>
                 </footer>
                 <p className="text-gray-500 dark:text-gray-400">{item.text}</p>

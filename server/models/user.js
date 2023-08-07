@@ -14,6 +14,19 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  photo: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/dhv4bjkxh/image/upload/v1691389169/m4shrs4j5tnkj73lnks9.png",
+  },
+  bio: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
   followers: [
     {
       type: ObjectId,
