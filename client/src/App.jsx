@@ -7,6 +7,7 @@ import Auth from "./pages/Auth";
 import { userReducer, initialState } from "./reducer/userReducer";
 import PostDetail from "./pages/post-detail";
 import User from "./pages/User";
+import Error from "./pages/error";
 
 export const UserContext = createContext();
 
@@ -30,6 +31,7 @@ const Routing = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/posts/:id" element={<PostDetail />} />
       <Route path="/user/:id" element={<User />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 };

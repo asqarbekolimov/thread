@@ -84,7 +84,7 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    if (url) {
+    if (!url) {
       ourFields();
     }
   }, [url]);

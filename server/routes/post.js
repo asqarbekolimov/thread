@@ -95,7 +95,7 @@ router.get("/posts/:postId", (req, res) => {
 
   // MongoDB dan postni olish va uni sahifaga jo'natish
   Post.findById(postId)
-    .populate("comments.postedBy", "_id, name")
+    .populate("comments.postedBy", "_id, name photo")
     .populate("postedBy", "_id name photo")
     .then((post) => {
       if (!post) {

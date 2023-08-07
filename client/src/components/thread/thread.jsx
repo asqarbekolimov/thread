@@ -156,11 +156,11 @@ const Thread = ({ post, data, setData, options = true }) => {
             </div>
             <div className="flex items-center gap-1">
               <LuRepeat2 className="text-2xl cursor-pointer" />
-              <span className="text-sm text-gray-400">110</span>
+              {/* <span className="text-sm text-gray-400">110</span> */}
             </div>
             <div className="flex items-center gap-1">
               <LuSend className="text-xl cursor-pointer" />
-              <span className="text-sm text-gray-400">110</span>
+              {/* <span className="text-sm text-gray-400">110</span> */}
             </div>
           </div>
           <div>
@@ -186,7 +186,7 @@ const Thread = ({ post, data, setData, options = true }) => {
                       <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                         <img
                           className="mr-2 w-6 h-6 rounded-full"
-                          src={post?.postedBy?.photo}
+                          src={item?.postedBy?.photo}
                           alt={item.postedBy.name}
                         />
                         {item.postedBy.name}
